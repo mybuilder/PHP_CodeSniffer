@@ -121,9 +121,7 @@ class Symfony2_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer
 
         $method = $phpcsFile->getMethodProperties($stackPtr);
         $commentRequired = 'public' == $method['scope'] || 'protected' == $method['scope'];
-        if (($code === T_COMMENT && !$commentRequired)
-            || ($code !== T_DOC_COMMENT && !$commentRequired)
-        ) {
+        if (($code === T_COMMENT && !$commentRequired) || ($code !== T_DOC_COMMENT && !$commentRequired)) {
             return;
         }
 
@@ -134,16 +132,20 @@ class Symfony2_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer
             // only thing on the line, assume we found nothing.
             $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $commentEnd);
             if ($tokens[$commentEnd]['line'] === $tokens[$commentEnd]['line']) {
-                $error = 'Missing function doc comment';
+                $error = 'Missing function doc comment - 1';
                 $phpcsFile->addError($error, $stackPtr, 'Missing');
             } else {
                 $error = 'You must use "/**" style comments for a function comment';
                 $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
             }
             return;
-        } else if ($code !== T_DOC_COMMENT) {
-            $error = 'Missing function doc comment';
+        } else if ($code !== T_DOC_COMMENT && $commentRequired) {
+            $error = 'Missing function doc comment - 2';
             $phpcsFile->addError($error, $stackPtr, 'Missing');
+            return;
+        }
+        elseif (false === $commentRequired)
+        {
             return;
         }
 
@@ -156,7 +158,7 @@ class Symfony2_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer
         $ignore[]  = T_FINAL;
         $prevToken = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if ($prevToken !== $commentEnd) {
-            $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+            $phpcsFile->addError('Missing function doc comment - 3', $stackPtr, 'Missing');
             return;
         }
 
@@ -269,10 +271,10 @@ class Symfony2_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer
             $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
         }
 
-        if ($lastChar == '.') {
-            $error = 'Function comment short description must not end with a full stop';
-            $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
-        }
+        //if ($lastChar == '.') {
+        //    $error = 'Function comment short description must not end with a full stop';
+        //    $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
+        //}
 
         // Check for unknown/deprecated tags.
         //$this->processUnknownTags($commentStart, $commentEnd);
@@ -771,14 +773,14 @@ class Symfony2_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer
                     // Param comments must start with a capital letter and
                     // end with the full stop.
                     $firstChar = $paramComment{0};
-                    if (preg_match('|[A-Z]|', $firstChar) !== 0) {
-                        $error = 'Param comment must not start with a capital letter';
+                    if (preg_match('|[A-Z]|', $firstChar) !== 1) {
+                        $error = 'Param comment must start with a capital letter';
                         $this->currentFile->addError($error, $errorPos, 'ParamCommentNotCapital');
                     }
 
                     $lastChar = $paramComment[(strlen($paramComment) - 1)];
-                    if ($lastChar == '.') {
-                        $error = 'Param comment must not end with a full stop';
+                    if ($lastChar !== '.') {
+                        $error = 'Param comment must end with a full stop';
                         $this->currentFile->addError($error, $errorPos, 'ParamCommentFullStop');
                     }
                 }
