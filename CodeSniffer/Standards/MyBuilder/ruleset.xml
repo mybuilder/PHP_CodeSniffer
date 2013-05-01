@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<ruleset name="MyBuilder">
+    <rule ref="PSR2">
+        <exclude name="Generic.Files.LineLength"/>
+        <exclude name="PSR2.Files.EndFileNewline"/>
+
+        <rule ref="Generic.Files.LineEndings">
+            <properties>
+                <property name="eolChar" value="\n"/>
+            </properties>
+        </rule>
+
+    </rule>
+
+    <rule ref="Symfony2">
+        <exclude name="Generic.Files.LineLength"/>
+        <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
+        <exclude name="Squiz.ControlStructures.SwitchDeclaration"/>
+        <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+    </rule>
+
+
+    <rule ref="Squiz.PHP.Eval"/>
+
+    <rule ref="Squiz.Commenting.VariableComment.MissingShort">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Squiz.Commenting.VariableComment.SpacingBeforeTags">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Symfony2.Commenting.ClassComment">
+        <exclude-pattern>*/Tests/*</exclude-pattern>
+        <exclude-pattern>*/Features/Context/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Symfony2.Commenting.FunctionComment">
+        <exclude-pattern>*/Tests/*</exclude-pattern>
+        <exclude-pattern>*/Features/Context/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Symfony2.Commenting.FunctionComment.ParamCommentNotCapital">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Symfony2.Commenting.FunctionComment.ParamCommentFullStop">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Symfony2.Commenting.FunctionComment.ThrowsNotCapital">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Symfony2.Commenting.FunctionComment.ThrowsNoFullStop">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Symfony2.Commenting.FunctionComment.SpacingAfterLongName">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName">
+        <exclude-pattern>*/Features/Context/*</exclude-pattern>
+    </rule>
+
+    <exclude-pattern>*/om/*</exclude-pattern>
+    <exclude-pattern>*/map/*</exclude-pattern>
+</ruleset>
