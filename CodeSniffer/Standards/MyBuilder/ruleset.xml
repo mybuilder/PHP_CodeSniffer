@@ -57,6 +57,12 @@
     </rule>
 
     <rule ref="Generic.NamingConventions.CamelCapsFunctionName">
+        <exclude-pattern>*/Tests/*</exclude-pattern>
+        <exclude-pattern>*/Features/Context/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName">
+        <exclude-pattern>*/Tests/*</exclude-pattern>
         <exclude-pattern>*/Features/Context/*</exclude-pattern>
     </rule>
 
