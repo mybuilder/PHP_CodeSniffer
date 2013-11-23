@@ -40,6 +40,10 @@
         <exclude-pattern>*/Features/Context/*</exclude-pattern>
     </rule>
 
+    <rule ref="Symfony2.Commenting.FunctionComment.MissingShort">
+        <severity>0</severity>
+    </rule>
+
     <rule ref="Symfony2.Commenting.FunctionComment.ParamCommentNotCapital">
         <severity>0</severity>
     </rule>
