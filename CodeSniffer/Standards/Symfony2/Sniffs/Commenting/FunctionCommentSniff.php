@@ -120,7 +120,9 @@ class Symfony2_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer
         $code = $tokens[$commentEnd]['code'];
 
         $method = $phpcsFile->getMethodProperties($stackPtr);
-        $commentRequired = 'public' == $method['scope'] || 'protected' == $method['scope'];
+        $commentRequired =
+            ('public' == $method['scope'] || 'protected' == $method['scope']) &&
+            $phpcsFile->getDeclarationName($stackPtr) !== '__construct';
         if (($code === T_COMMENT && !$commentRequired) || ($code !== T_DOC_COMMENT && !$commentRequired)) {
             return;
         }
